@@ -1,48 +1,66 @@
 package com.company;
 
 // It is task1
-//Создаем новые напитки через билдер
 
-public class Drink{
+public class Drink {
     private String name;
     private String description;
     private double price;
+    DrinkBuilder drinkBuilder;
 
-    public String getName(){
+    public DrinkBuilder getDrinkBuilder(){
+        return this.drinkBuilder;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public double getPrice(){
+    public double getPrice() {
         return price;
     }
 
-    private Drink(Builder builder){
-        this.name = builder.name;
-        this.description = builder.description;
-        this.price = builder.price;
+    private Drink(String name, String description, double price, DrinkBuilder drinkBuilder) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.drinkBuilder = drinkBuilder;
     }
 
-    static class Builder{
-        private String name;
-        private String description;
-        private double price;
+     static class DrinkBuilder {
+        private String name = "";
+        private String description = "";
+        private double price = 0;
 
-        public Builder(String name, String description){
+
+
+        public DrinkBuilder setName(String name) {
             this.name = name;
-            this.description = description;
+            return this;
         }
 
-        public Builder setPrice(double price){
+        public DrinkBuilder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public DrinkBuilder setPrice(double price) {
             this.price = price;
             return this;
         }
 
-        public Drink build(){
-            return new Drink(this);
+        public Drink build() {
+            return new Drink(name, description, price, this);
         }
+
+    }
+
+    @Override
+    public String toString() {
+        return name + "\n" + description + "\n" + price;
     }
 }
